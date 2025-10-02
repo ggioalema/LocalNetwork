@@ -1,0 +1,39 @@
+#! /bin/bash 
+
+# Carica la configurazione
+source "$(dirname "$0")/config.sh"
+
+if [ "$1" == "-s" ]; then
+  echo "Connessione SSH avviata a $USER_SERVER@$IP_SERVER sulla porta $PORT_STD"
+  #notify-send "Connessione SSH avviata a $USER_SERVER@$IP_SERVER sulla porta $PORT_STD"
+  ssh -p $PORT_STD $USER_SERVER@$IP_SERVER
+
+elif [ "$1" == "-c" ]; then
+  echo "Connessione SSH avviata a $USER_COMP@$IP_COMP sulla porta $PORT_STD"
+  #notify-send "Connessione SSH avviata a $USER_COMP@$IP_COMP sulla porta $PORT_STD"
+  ssh -p $PORT_STD $USER_COMP@$IP_COMP
+
+elif [ "$1" == "-t" ]; then
+  echo "Connessione SSH avviata a $USER_TEL@$IP_TEL sulla porta $PORT_TEL"
+  #notify-send "Connessione SSH avviata a $USER_TEL@$IP_TEL sulla porta $PORT_TEL"
+  ssh -p $PORT_TEL $USER_TEL@$IP_TEL
+
+elif [ "$1" == "-h" ]; then
+  echo "Usage: $0 [-s | -c | -t]"
+  echo "  -s: server"
+  echo "  -c: computer"
+  echo "  -t: telefono"
+  echo "  -h: help"
+  echo "Network SSH in order to connect to various devices in the network."
+  echo "(necessita del file config.sh con le variabili di configurazione)"
+
+  exit 0
+
+else
+  echo "Usage: $0 [-s | -c | -t]"
+  echo "  -s: server"
+  echo "  -c: computer"
+  echo "  -t: telefono"
+  echo "  -h: help"
+  exit 1
+fi
