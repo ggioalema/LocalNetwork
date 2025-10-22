@@ -1,21 +1,22 @@
-#! /bin/bash 
+#! /bin/bash
 
 # Carica la configurazione
 source "$(dirname "$0")/config.sh"
 
-usage() {   echo "Usage: $0 [-s | -c | -t] [file] [-s | -c | -t] [where] [-r if recursive]"
+usage() {
+  echo "Usage: $0 [-s | -c | -t] [file] [-s | -c | -t] [where] [-r if recursive]"
   echo "  -s: server"
   echo "  -c: computer"
   echo "  -t: telefono"
   echo "  -h: help"
   echo "Network SCP in order to copy files to various devices in the network."
-  echo "(necessita del file config.sh con le variabili di configurazione)" 
+  echo "(necessita del file config.sh con le variabili di configurazione)"
   echo "Tutte le path partono da home locali"
-  echo "ATTENZIONE: PER ORA NON SUPPORTA DA REMOTO A REMOTO";}
-
+  echo "ATTENZIONE: PER ORA NON SUPPORTA DA REMOTO A REMOTO"
+}
 
 LOCAL_IP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | grep 100)
-#echo "Local IP: $LOCAL_IP"
+echo "Local IP: $LOCAL_IP"
 
 if [ "$1" == "-h" ]; then
   usage
@@ -74,7 +75,7 @@ if [ "$3" == "-s" ]; then
   USER_DEST=$USER_SERVER
 
 elif [ "$3" == "-c" ]; then
-  DEST_DISP=$IP_COMP  
+  DEST_DISP=$IP_COMP
   HOME_DEST=$HOME_COMP
   USER_DEST=$USER_COMP
 
@@ -101,6 +102,3 @@ else
   usage
   exit 1
 fi
-
-
-
