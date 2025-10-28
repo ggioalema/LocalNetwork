@@ -33,6 +33,28 @@ sudo apt update
 sudo apt install -y openssh-client sshfs iputils-ping libfuse2 libnotify-bin
 ```
 
+On Arch Linux and derivatives (Manjaro, EndeavourOS, etc.):
+
+```bash
+sudo pacman -S openssh fuse2 sshfs inetutils libnotify
+```
+
+### Setting up mount directories
+
+The scripts use directories under `/mnt/` to mount remote filesystems. You need to create these directories and ensure your user has proper permissions:
+
+```bash
+# Create mount points
+sudo mkdir -p /mnt/server /mnt/telefono
+
+# Change ownership to your user (replace USERNAME with your actual username)
+sudo chown USERNAME:USERNAME /mnt/server /mnt/telefono
+
+# Or alternatively, if you want to allow all users in your group to access the mounts
+sudo chown root:users /mnt/server /mnt/telefono
+sudo chmod 775 /mnt/server /mnt/telefono
+```
+
 ## The `config.sh` file
 
 `config.sh` contains all variables used by the scripts. Use `config_example.sh` as a template: copy it to `config.sh` and fill in your values.
