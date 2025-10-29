@@ -15,7 +15,11 @@ usage() {
   echo "ATTENZIONE: PER ORA NON SUPPORTA DA REMOTO A REMOTO"
 }
 
-LOCAL_IP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | grep 100)
+LOCAL_IP=$(ip -o -4 addr show | awk '{print $4}' | cut -d'/' -f1 | grep -E '^100\.' | head -n1)
+if [ -z "$LOCAL_IP" ]; then
+  echo "Local IP (Tailscale) not found\nCheck if tailscale is active" >&2
+  exit 1
+fi
 echo "Local IP: $LOCAL_IP"
 
 if [ "$1" == "-h" ]; then
